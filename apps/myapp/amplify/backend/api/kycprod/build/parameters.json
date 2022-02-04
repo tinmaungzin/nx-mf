@@ -1,0 +1,8 @@
+{
+    "AppSyncApiName": "kycprod",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthModeLastUpdated": "2022-01-28T04:19:31.101Z",
+    "S3DeploymentBucket": "amplify-kycprod-staging-133557-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/3d663f94aad5c1b38b1cc70ca48a8ce11919a10a"
+}

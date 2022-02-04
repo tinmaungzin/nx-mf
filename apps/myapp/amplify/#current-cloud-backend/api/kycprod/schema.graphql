@@ -1,0 +1,109 @@
+type Budget @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  lumpSumBudget: Int
+  annualBudget: Int
+  customerID: ID! @index(name: "byCustomer")
+}
+
+type NetWorth @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  totalAssets: Int
+  cashEquivalents: Int
+  residentialProperty: Int
+  allowance: Int
+  equities: Int
+  bonds: Int
+  unitTrusts: Int
+  personalUseAssets: Int
+  ordinaryAccount: Int
+  specialAccount: Int
+  mediSaveAccount: Int
+  totalLiabilities: Int
+  mortgageLoan: Int
+  carLoan: Int
+  lumpSum: Int
+  customerID: ID! @index(name: "byCustomer")
+}
+
+type Coverage @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  policyType: String
+  policyPeriod: String
+  policyName: String
+  insurer: String
+  issuedYear: AWSDate
+  maturityYear: AWSDate
+  policyBenefitName: String
+  policyBenefitPrice: Int
+  premiumAmount: Int
+  paymentType: String
+  premiumTerm: String
+  policyFor: String
+  customerID: ID! @index(name: "byCustomer")
+}
+
+type CashFlow @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  annualInflow: Int
+  annualOutflow: Int
+  surPlus: Int
+  grossAnnualIncome: Int
+  annualCPFContribution: Int
+  allowance: Int
+  rental: Int
+  committedExpenses: Int
+  cpfPropertyLoanRepayment: Int
+  carLoanRepayment: Int
+  otherCommittedCarExpenses: Int
+  cpfInsurancePremiums: Int
+  cashInsurancePremiums: Int
+  cpfInvestment: Int
+  cashInvestment: Int
+  incomeTax: Int
+  manageableExpenses: Int
+  familyExpenses: Int
+  lifestyleExpenses: Int
+  additionalExpenses: Int
+  customerID: ID! @index(name: "byCustomer")
+  cashPropertyLoanRepaymentfield: String
+}
+
+type Dependent @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  relationship: String
+  name: String
+  gender: String
+  birthday: AWSDate
+  citizenshipRace: String
+  icNo: String
+  idType: String
+  customerID: ID! @index(name: "byCustomer")
+  monthlyUpkeep: String
+  targetAge: String
+  yearLeft: String
+}
+
+type Customer @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  accountName: String
+  accountType: String
+  countryRace: String
+  gender: String
+  icNo: String
+  name: String
+  birthday: AWSDate
+  agentID: ID! @index(name: "byAgent")
+  Dependents: [Dependent] @hasMany(indexName: "byCustomer", fields: ["id"])
+  CashFlows: [CashFlow] @hasMany(indexName: "byCustomer", fields: ["id"])
+  Coverages: [Coverage] @hasMany(indexName: "byCustomer", fields: ["id"])
+  NetWorths: [NetWorth] @hasMany(indexName: "byCustomer", fields: ["id"])
+  Budgets: [Budget] @hasMany(indexName: "byCustomer", fields: ["id"])
+}
+
+type Agent @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  agentId: String
+  name: String
+  Customers: [Customer] @hasMany(indexName: "byAgent", fields: ["id"])
+}
+ 

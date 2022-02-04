@@ -1,0 +1,846 @@
+
+type Budget @aws_iam @aws_api_key {
+  id: ID!
+  lumpSumBudget: Int
+  annualBudget: Int
+  customerID: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type NetWorth @aws_iam @aws_api_key {
+  id: ID!
+  totalAssets: Int
+  cashEquivalents: Int
+  residentialProperty: Int
+  allowance: Int
+  equities: Int
+  bonds: Int
+  unitTrusts: Int
+  personalUseAssets: Int
+  ordinaryAccount: Int
+  specialAccount: Int
+  mediSaveAccount: Int
+  totalLiabilities: Int
+  mortgageLoan: Int
+  carLoan: Int
+  lumpSum: Int
+  customerID: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type Coverage @aws_iam @aws_api_key {
+  id: ID!
+  policyType: String
+  policyPeriod: String
+  policyName: String
+  insurer: String
+  issuedYear: AWSDate
+  maturityYear: AWSDate
+  policyBenefitName: String
+  policyBenefitPrice: Int
+  premiumAmount: Int
+  paymentType: String
+  premiumTerm: String
+  policyFor: String
+  customerID: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type CashFlow @aws_iam @aws_api_key {
+  id: ID!
+  annualInflow: Int
+  annualOutflow: Int
+  surPlus: Int
+  grossAnnualIncome: Int
+  annualCPFContribution: Int
+  allowance: Int
+  rental: Int
+  committedExpenses: Int
+  cpfPropertyLoanRepayment: Int
+  carLoanRepayment: Int
+  otherCommittedCarExpenses: Int
+  cpfInsurancePremiums: Int
+  cashInsurancePremiums: Int
+  cpfInvestment: Int
+  cashInvestment: Int
+  incomeTax: Int
+  manageableExpenses: Int
+  familyExpenses: Int
+  lifestyleExpenses: Int
+  additionalExpenses: Int
+  customerID: ID!
+  cashPropertyLoanRepaymentfield: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type Dependent @aws_iam @aws_api_key {
+  id: ID!
+  relationship: String
+  name: String
+  gender: String
+  birthday: AWSDate
+  citizenshipRace: String
+  icNo: String
+  idType: String
+  customerID: ID!
+  monthlyUpkeep: String
+  targetAge: String
+  yearLeft: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type Customer @aws_iam @aws_api_key {
+  id: ID!
+  accountName: String
+  accountType: String
+  countryRace: String
+  gender: String
+  icNo: String
+  name: String
+  birthday: AWSDate
+  agentID: ID!
+  Dependents(filter: ModelDependentFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelDependentConnection
+  CashFlows(filter: ModelCashFlowFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCashFlowConnection
+  Coverages(filter: ModelCoverageFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCoverageConnection
+  NetWorths(filter: ModelNetWorthFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelNetWorthConnection
+  Budgets(filter: ModelBudgetFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelBudgetConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type Agent @aws_iam @aws_api_key {
+  id: ID!
+  agentId: String
+  name: String
+  Customers(filter: ModelCustomerFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCustomerConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelBudgetConnection @aws_api_key @aws_iam {
+  items: [Budget]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelBudgetFilterInput {
+  id: ModelIDInput
+  lumpSumBudget: ModelIntInput
+  annualBudget: ModelIntInput
+  customerID: ModelIDInput
+  and: [ModelBudgetFilterInput]
+  or: [ModelBudgetFilterInput]
+  not: ModelBudgetFilterInput
+}
+
+type Query {
+  getBudget(id: ID!): Budget @aws_api_key @aws_iam
+  listBudgets(filter: ModelBudgetFilterInput, limit: Int, nextToken: String): ModelBudgetConnection @aws_api_key @aws_iam
+  syncBudgets(filter: ModelBudgetFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelBudgetConnection @aws_api_key @aws_iam
+  getNetWorth(id: ID!): NetWorth @aws_api_key @aws_iam
+  listNetWorths(filter: ModelNetWorthFilterInput, limit: Int, nextToken: String): ModelNetWorthConnection @aws_api_key @aws_iam
+  syncNetWorths(filter: ModelNetWorthFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelNetWorthConnection @aws_api_key @aws_iam
+  getCoverage(id: ID!): Coverage @aws_api_key @aws_iam
+  listCoverages(filter: ModelCoverageFilterInput, limit: Int, nextToken: String): ModelCoverageConnection @aws_api_key @aws_iam
+  syncCoverages(filter: ModelCoverageFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelCoverageConnection @aws_api_key @aws_iam
+  getCashFlow(id: ID!): CashFlow @aws_api_key @aws_iam
+  listCashFlows(filter: ModelCashFlowFilterInput, limit: Int, nextToken: String): ModelCashFlowConnection @aws_api_key @aws_iam
+  syncCashFlows(filter: ModelCashFlowFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelCashFlowConnection @aws_api_key @aws_iam
+  getDependent(id: ID!): Dependent @aws_api_key @aws_iam
+  listDependents(filter: ModelDependentFilterInput, limit: Int, nextToken: String): ModelDependentConnection @aws_api_key @aws_iam
+  syncDependents(filter: ModelDependentFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelDependentConnection @aws_api_key @aws_iam
+  getCustomer(id: ID!): Customer @aws_api_key @aws_iam
+  listCustomers(filter: ModelCustomerFilterInput, limit: Int, nextToken: String): ModelCustomerConnection @aws_api_key @aws_iam
+  syncCustomers(filter: ModelCustomerFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelCustomerConnection @aws_api_key @aws_iam
+  getAgent(id: ID!): Agent @aws_api_key @aws_iam
+  listAgents(filter: ModelAgentFilterInput, limit: Int, nextToken: String): ModelAgentConnection @aws_api_key @aws_iam
+  syncAgents(filter: ModelAgentFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelAgentConnection @aws_api_key @aws_iam
+}
+
+input ModelBudgetConditionInput {
+  lumpSumBudget: ModelIntInput
+  annualBudget: ModelIntInput
+  customerID: ModelIDInput
+  and: [ModelBudgetConditionInput]
+  or: [ModelBudgetConditionInput]
+  not: ModelBudgetConditionInput
+}
+
+input CreateBudgetInput {
+  id: ID
+  lumpSumBudget: Int
+  annualBudget: Int
+  customerID: ID!
+  _version: Int
+}
+
+input UpdateBudgetInput {
+  id: ID!
+  lumpSumBudget: Int
+  annualBudget: Int
+  customerID: ID
+  _version: Int
+}
+
+input DeleteBudgetInput {
+  id: ID!
+  _version: Int
+}
+
+type Mutation {
+  createBudget(input: CreateBudgetInput!, condition: ModelBudgetConditionInput): Budget @aws_api_key @aws_iam
+  updateBudget(input: UpdateBudgetInput!, condition: ModelBudgetConditionInput): Budget @aws_api_key @aws_iam
+  deleteBudget(input: DeleteBudgetInput!, condition: ModelBudgetConditionInput): Budget @aws_api_key @aws_iam
+  createNetWorth(input: CreateNetWorthInput!, condition: ModelNetWorthConditionInput): NetWorth @aws_api_key @aws_iam
+  updateNetWorth(input: UpdateNetWorthInput!, condition: ModelNetWorthConditionInput): NetWorth @aws_api_key @aws_iam
+  deleteNetWorth(input: DeleteNetWorthInput!, condition: ModelNetWorthConditionInput): NetWorth @aws_api_key @aws_iam
+  createCoverage(input: CreateCoverageInput!, condition: ModelCoverageConditionInput): Coverage @aws_api_key @aws_iam
+  updateCoverage(input: UpdateCoverageInput!, condition: ModelCoverageConditionInput): Coverage @aws_api_key @aws_iam
+  deleteCoverage(input: DeleteCoverageInput!, condition: ModelCoverageConditionInput): Coverage @aws_api_key @aws_iam
+  createCashFlow(input: CreateCashFlowInput!, condition: ModelCashFlowConditionInput): CashFlow @aws_api_key @aws_iam
+  updateCashFlow(input: UpdateCashFlowInput!, condition: ModelCashFlowConditionInput): CashFlow @aws_api_key @aws_iam
+  deleteCashFlow(input: DeleteCashFlowInput!, condition: ModelCashFlowConditionInput): CashFlow @aws_api_key @aws_iam
+  createDependent(input: CreateDependentInput!, condition: ModelDependentConditionInput): Dependent @aws_api_key @aws_iam
+  updateDependent(input: UpdateDependentInput!, condition: ModelDependentConditionInput): Dependent @aws_api_key @aws_iam
+  deleteDependent(input: DeleteDependentInput!, condition: ModelDependentConditionInput): Dependent @aws_api_key @aws_iam
+  createCustomer(input: CreateCustomerInput!, condition: ModelCustomerConditionInput): Customer @aws_api_key @aws_iam
+  updateCustomer(input: UpdateCustomerInput!, condition: ModelCustomerConditionInput): Customer @aws_api_key @aws_iam
+  deleteCustomer(input: DeleteCustomerInput!, condition: ModelCustomerConditionInput): Customer @aws_api_key @aws_iam
+  createAgent(input: CreateAgentInput!, condition: ModelAgentConditionInput): Agent @aws_api_key @aws_iam
+  updateAgent(input: UpdateAgentInput!, condition: ModelAgentConditionInput): Agent @aws_api_key @aws_iam
+  deleteAgent(input: DeleteAgentInput!, condition: ModelAgentConditionInput): Agent @aws_api_key @aws_iam
+}
+
+type Subscription {
+  onCreateBudget: Budget @aws_subscribe(mutations: ["createBudget"]) @aws_api_key @aws_iam
+  onUpdateBudget: Budget @aws_subscribe(mutations: ["updateBudget"]) @aws_api_key @aws_iam
+  onDeleteBudget: Budget @aws_subscribe(mutations: ["deleteBudget"]) @aws_api_key @aws_iam
+  onCreateNetWorth: NetWorth @aws_subscribe(mutations: ["createNetWorth"]) @aws_api_key @aws_iam
+  onUpdateNetWorth: NetWorth @aws_subscribe(mutations: ["updateNetWorth"]) @aws_api_key @aws_iam
+  onDeleteNetWorth: NetWorth @aws_subscribe(mutations: ["deleteNetWorth"]) @aws_api_key @aws_iam
+  onCreateCoverage: Coverage @aws_subscribe(mutations: ["createCoverage"]) @aws_api_key @aws_iam
+  onUpdateCoverage: Coverage @aws_subscribe(mutations: ["updateCoverage"]) @aws_api_key @aws_iam
+  onDeleteCoverage: Coverage @aws_subscribe(mutations: ["deleteCoverage"]) @aws_api_key @aws_iam
+  onCreateCashFlow: CashFlow @aws_subscribe(mutations: ["createCashFlow"]) @aws_api_key @aws_iam
+  onUpdateCashFlow: CashFlow @aws_subscribe(mutations: ["updateCashFlow"]) @aws_api_key @aws_iam
+  onDeleteCashFlow: CashFlow @aws_subscribe(mutations: ["deleteCashFlow"]) @aws_api_key @aws_iam
+  onCreateDependent: Dependent @aws_subscribe(mutations: ["createDependent"]) @aws_api_key @aws_iam
+  onUpdateDependent: Dependent @aws_subscribe(mutations: ["updateDependent"]) @aws_api_key @aws_iam
+  onDeleteDependent: Dependent @aws_subscribe(mutations: ["deleteDependent"]) @aws_api_key @aws_iam
+  onCreateCustomer: Customer @aws_subscribe(mutations: ["createCustomer"]) @aws_api_key @aws_iam
+  onUpdateCustomer: Customer @aws_subscribe(mutations: ["updateCustomer"]) @aws_api_key @aws_iam
+  onDeleteCustomer: Customer @aws_subscribe(mutations: ["deleteCustomer"]) @aws_api_key @aws_iam
+  onCreateAgent: Agent @aws_subscribe(mutations: ["createAgent"]) @aws_api_key @aws_iam
+  onUpdateAgent: Agent @aws_subscribe(mutations: ["updateAgent"]) @aws_api_key @aws_iam
+  onDeleteAgent: Agent @aws_subscribe(mutations: ["deleteAgent"]) @aws_api_key @aws_iam
+}
+
+type ModelNetWorthConnection @aws_api_key @aws_iam {
+  items: [NetWorth]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelNetWorthFilterInput {
+  id: ModelIDInput
+  totalAssets: ModelIntInput
+  cashEquivalents: ModelIntInput
+  residentialProperty: ModelIntInput
+  allowance: ModelIntInput
+  equities: ModelIntInput
+  bonds: ModelIntInput
+  unitTrusts: ModelIntInput
+  personalUseAssets: ModelIntInput
+  ordinaryAccount: ModelIntInput
+  specialAccount: ModelIntInput
+  mediSaveAccount: ModelIntInput
+  totalLiabilities: ModelIntInput
+  mortgageLoan: ModelIntInput
+  carLoan: ModelIntInput
+  lumpSum: ModelIntInput
+  customerID: ModelIDInput
+  and: [ModelNetWorthFilterInput]
+  or: [ModelNetWorthFilterInput]
+  not: ModelNetWorthFilterInput
+}
+
+input ModelNetWorthConditionInput {
+  totalAssets: ModelIntInput
+  cashEquivalents: ModelIntInput
+  residentialProperty: ModelIntInput
+  allowance: ModelIntInput
+  equities: ModelIntInput
+  bonds: ModelIntInput
+  unitTrusts: ModelIntInput
+  personalUseAssets: ModelIntInput
+  ordinaryAccount: ModelIntInput
+  specialAccount: ModelIntInput
+  mediSaveAccount: ModelIntInput
+  totalLiabilities: ModelIntInput
+  mortgageLoan: ModelIntInput
+  carLoan: ModelIntInput
+  lumpSum: ModelIntInput
+  customerID: ModelIDInput
+  and: [ModelNetWorthConditionInput]
+  or: [ModelNetWorthConditionInput]
+  not: ModelNetWorthConditionInput
+}
+
+input CreateNetWorthInput {
+  id: ID
+  totalAssets: Int
+  cashEquivalents: Int
+  residentialProperty: Int
+  allowance: Int
+  equities: Int
+  bonds: Int
+  unitTrusts: Int
+  personalUseAssets: Int
+  ordinaryAccount: Int
+  specialAccount: Int
+  mediSaveAccount: Int
+  totalLiabilities: Int
+  mortgageLoan: Int
+  carLoan: Int
+  lumpSum: Int
+  customerID: ID!
+  _version: Int
+}
+
+input UpdateNetWorthInput {
+  id: ID!
+  totalAssets: Int
+  cashEquivalents: Int
+  residentialProperty: Int
+  allowance: Int
+  equities: Int
+  bonds: Int
+  unitTrusts: Int
+  personalUseAssets: Int
+  ordinaryAccount: Int
+  specialAccount: Int
+  mediSaveAccount: Int
+  totalLiabilities: Int
+  mortgageLoan: Int
+  carLoan: Int
+  lumpSum: Int
+  customerID: ID
+  _version: Int
+}
+
+input DeleteNetWorthInput {
+  id: ID!
+  _version: Int
+}
+
+type ModelCoverageConnection @aws_api_key @aws_iam {
+  items: [Coverage]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelCoverageFilterInput {
+  id: ModelIDInput
+  policyType: ModelStringInput
+  policyPeriod: ModelStringInput
+  policyName: ModelStringInput
+  insurer: ModelStringInput
+  issuedYear: ModelStringInput
+  maturityYear: ModelStringInput
+  policyBenefitName: ModelStringInput
+  policyBenefitPrice: ModelIntInput
+  premiumAmount: ModelIntInput
+  paymentType: ModelStringInput
+  premiumTerm: ModelStringInput
+  policyFor: ModelStringInput
+  customerID: ModelIDInput
+  and: [ModelCoverageFilterInput]
+  or: [ModelCoverageFilterInput]
+  not: ModelCoverageFilterInput
+}
+
+input ModelCoverageConditionInput {
+  policyType: ModelStringInput
+  policyPeriod: ModelStringInput
+  policyName: ModelStringInput
+  insurer: ModelStringInput
+  issuedYear: ModelStringInput
+  maturityYear: ModelStringInput
+  policyBenefitName: ModelStringInput
+  policyBenefitPrice: ModelIntInput
+  premiumAmount: ModelIntInput
+  paymentType: ModelStringInput
+  premiumTerm: ModelStringInput
+  policyFor: ModelStringInput
+  customerID: ModelIDInput
+  and: [ModelCoverageConditionInput]
+  or: [ModelCoverageConditionInput]
+  not: ModelCoverageConditionInput
+}
+
+input CreateCoverageInput {
+  id: ID
+  policyType: String
+  policyPeriod: String
+  policyName: String
+  insurer: String
+  issuedYear: AWSDate
+  maturityYear: AWSDate
+  policyBenefitName: String
+  policyBenefitPrice: Int
+  premiumAmount: Int
+  paymentType: String
+  premiumTerm: String
+  policyFor: String
+  customerID: ID!
+  _version: Int
+}
+
+input UpdateCoverageInput {
+  id: ID!
+  policyType: String
+  policyPeriod: String
+  policyName: String
+  insurer: String
+  issuedYear: AWSDate
+  maturityYear: AWSDate
+  policyBenefitName: String
+  policyBenefitPrice: Int
+  premiumAmount: Int
+  paymentType: String
+  premiumTerm: String
+  policyFor: String
+  customerID: ID
+  _version: Int
+}
+
+input DeleteCoverageInput {
+  id: ID!
+  _version: Int
+}
+
+type ModelCashFlowConnection @aws_api_key @aws_iam {
+  items: [CashFlow]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelCashFlowFilterInput {
+  id: ModelIDInput
+  annualInflow: ModelIntInput
+  annualOutflow: ModelIntInput
+  surPlus: ModelIntInput
+  grossAnnualIncome: ModelIntInput
+  annualCPFContribution: ModelIntInput
+  allowance: ModelIntInput
+  rental: ModelIntInput
+  committedExpenses: ModelIntInput
+  cpfPropertyLoanRepayment: ModelIntInput
+  carLoanRepayment: ModelIntInput
+  otherCommittedCarExpenses: ModelIntInput
+  cpfInsurancePremiums: ModelIntInput
+  cashInsurancePremiums: ModelIntInput
+  cpfInvestment: ModelIntInput
+  cashInvestment: ModelIntInput
+  incomeTax: ModelIntInput
+  manageableExpenses: ModelIntInput
+  familyExpenses: ModelIntInput
+  lifestyleExpenses: ModelIntInput
+  additionalExpenses: ModelIntInput
+  customerID: ModelIDInput
+  cashPropertyLoanRepaymentfield: ModelStringInput
+  and: [ModelCashFlowFilterInput]
+  or: [ModelCashFlowFilterInput]
+  not: ModelCashFlowFilterInput
+}
+
+input ModelCashFlowConditionInput {
+  annualInflow: ModelIntInput
+  annualOutflow: ModelIntInput
+  surPlus: ModelIntInput
+  grossAnnualIncome: ModelIntInput
+  annualCPFContribution: ModelIntInput
+  allowance: ModelIntInput
+  rental: ModelIntInput
+  committedExpenses: ModelIntInput
+  cpfPropertyLoanRepayment: ModelIntInput
+  carLoanRepayment: ModelIntInput
+  otherCommittedCarExpenses: ModelIntInput
+  cpfInsurancePremiums: ModelIntInput
+  cashInsurancePremiums: ModelIntInput
+  cpfInvestment: ModelIntInput
+  cashInvestment: ModelIntInput
+  incomeTax: ModelIntInput
+  manageableExpenses: ModelIntInput
+  familyExpenses: ModelIntInput
+  lifestyleExpenses: ModelIntInput
+  additionalExpenses: ModelIntInput
+  customerID: ModelIDInput
+  cashPropertyLoanRepaymentfield: ModelStringInput
+  and: [ModelCashFlowConditionInput]
+  or: [ModelCashFlowConditionInput]
+  not: ModelCashFlowConditionInput
+}
+
+input CreateCashFlowInput {
+  id: ID
+  annualInflow: Int
+  annualOutflow: Int
+  surPlus: Int
+  grossAnnualIncome: Int
+  annualCPFContribution: Int
+  allowance: Int
+  rental: Int
+  committedExpenses: Int
+  cpfPropertyLoanRepayment: Int
+  carLoanRepayment: Int
+  otherCommittedCarExpenses: Int
+  cpfInsurancePremiums: Int
+  cashInsurancePremiums: Int
+  cpfInvestment: Int
+  cashInvestment: Int
+  incomeTax: Int
+  manageableExpenses: Int
+  familyExpenses: Int
+  lifestyleExpenses: Int
+  additionalExpenses: Int
+  customerID: ID!
+  cashPropertyLoanRepaymentfield: String
+  _version: Int
+}
+
+input UpdateCashFlowInput {
+  id: ID!
+  annualInflow: Int
+  annualOutflow: Int
+  surPlus: Int
+  grossAnnualIncome: Int
+  annualCPFContribution: Int
+  allowance: Int
+  rental: Int
+  committedExpenses: Int
+  cpfPropertyLoanRepayment: Int
+  carLoanRepayment: Int
+  otherCommittedCarExpenses: Int
+  cpfInsurancePremiums: Int
+  cashInsurancePremiums: Int
+  cpfInvestment: Int
+  cashInvestment: Int
+  incomeTax: Int
+  manageableExpenses: Int
+  familyExpenses: Int
+  lifestyleExpenses: Int
+  additionalExpenses: Int
+  customerID: ID
+  cashPropertyLoanRepaymentfield: String
+  _version: Int
+}
+
+input DeleteCashFlowInput {
+  id: ID!
+  _version: Int
+}
+
+type ModelDependentConnection @aws_api_key @aws_iam {
+  items: [Dependent]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelDependentFilterInput {
+  id: ModelIDInput
+  relationship: ModelStringInput
+  name: ModelStringInput
+  gender: ModelStringInput
+  birthday: ModelStringInput
+  citizenshipRace: ModelStringInput
+  icNo: ModelStringInput
+  idType: ModelStringInput
+  customerID: ModelIDInput
+  monthlyUpkeep: ModelStringInput
+  targetAge: ModelStringInput
+  yearLeft: ModelStringInput
+  and: [ModelDependentFilterInput]
+  or: [ModelDependentFilterInput]
+  not: ModelDependentFilterInput
+}
+
+input ModelDependentConditionInput {
+  relationship: ModelStringInput
+  name: ModelStringInput
+  gender: ModelStringInput
+  birthday: ModelStringInput
+  citizenshipRace: ModelStringInput
+  icNo: ModelStringInput
+  idType: ModelStringInput
+  customerID: ModelIDInput
+  monthlyUpkeep: ModelStringInput
+  targetAge: ModelStringInput
+  yearLeft: ModelStringInput
+  and: [ModelDependentConditionInput]
+  or: [ModelDependentConditionInput]
+  not: ModelDependentConditionInput
+}
+
+input CreateDependentInput {
+  id: ID
+  relationship: String
+  name: String
+  gender: String
+  birthday: AWSDate
+  citizenshipRace: String
+  icNo: String
+  idType: String
+  customerID: ID!
+  monthlyUpkeep: String
+  targetAge: String
+  yearLeft: String
+  _version: Int
+}
+
+input UpdateDependentInput {
+  id: ID!
+  relationship: String
+  name: String
+  gender: String
+  birthday: AWSDate
+  citizenshipRace: String
+  icNo: String
+  idType: String
+  customerID: ID
+  monthlyUpkeep: String
+  targetAge: String
+  yearLeft: String
+  _version: Int
+}
+
+input DeleteDependentInput {
+  id: ID!
+  _version: Int
+}
+
+type ModelCustomerConnection @aws_api_key @aws_iam {
+  items: [Customer]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelCustomerFilterInput {
+  id: ModelIDInput
+  accountName: ModelStringInput
+  accountType: ModelStringInput
+  countryRace: ModelStringInput
+  gender: ModelStringInput
+  icNo: ModelStringInput
+  name: ModelStringInput
+  birthday: ModelStringInput
+  agentID: ModelIDInput
+  and: [ModelCustomerFilterInput]
+  or: [ModelCustomerFilterInput]
+  not: ModelCustomerFilterInput
+}
+
+input ModelCustomerConditionInput {
+  accountName: ModelStringInput
+  accountType: ModelStringInput
+  countryRace: ModelStringInput
+  gender: ModelStringInput
+  icNo: ModelStringInput
+  name: ModelStringInput
+  birthday: ModelStringInput
+  agentID: ModelIDInput
+  and: [ModelCustomerConditionInput]
+  or: [ModelCustomerConditionInput]
+  not: ModelCustomerConditionInput
+}
+
+input CreateCustomerInput {
+  id: ID
+  accountName: String
+  accountType: String
+  countryRace: String
+  gender: String
+  icNo: String
+  name: String
+  birthday: AWSDate
+  agentID: ID!
+  _version: Int
+}
+
+input UpdateCustomerInput {
+  id: ID!
+  accountName: String
+  accountType: String
+  countryRace: String
+  gender: String
+  icNo: String
+  name: String
+  birthday: AWSDate
+  agentID: ID
+  _version: Int
+}
+
+input DeleteCustomerInput {
+  id: ID!
+  _version: Int
+}
+
+type ModelAgentConnection @aws_api_key @aws_iam {
+  items: [Agent]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelAgentFilterInput {
+  id: ModelIDInput
+  agentId: ModelStringInput
+  name: ModelStringInput
+  and: [ModelAgentFilterInput]
+  or: [ModelAgentFilterInput]
+  not: ModelAgentFilterInput
+}
+
+input ModelAgentConditionInput {
+  agentId: ModelStringInput
+  name: ModelStringInput
+  and: [ModelAgentConditionInput]
+  or: [ModelAgentConditionInput]
+  not: ModelAgentConditionInput
+}
+
+input CreateAgentInput {
+  id: ID
+  agentId: String
+  name: String
+  _version: Int
+}
+
+input UpdateAgentInput {
+  id: ID!
+  agentId: String
+  name: String
+  _version: Int
+}
+
+input DeleteAgentInput {
+  id: ID!
+  _version: Int
+}
+
